@@ -1,6 +1,8 @@
 # Logs
 logs
 *.log
+backend-dev*.log
+frontend-dev*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -85,6 +87,7 @@ out
 # Nuxt.js build / generate output
 .nuxt
 dist
+frontend/dist/
 
 # Gatsby files
 .cache/
@@ -117,5 +120,14 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-# End of https://mrkandreev.name/snippets/gitignore-generator/#Node
+
 .DS_Store
+
+# Local upload scratch space
+public/temp/*
+!public/temp/.gitkeep
+
+# Frontend local environment files
+frontend/.env
+frontend/.env.local
+frontend/.env.*.local
