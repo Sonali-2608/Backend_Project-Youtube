@@ -1,6 +1,6 @@
-# Backend Project
+# Creator Studio API
 
-A Node.js and Express backend API for a YouTube-style application. It includes user authentication, video publishing, comments, likes, playlists, subscriptions, dashboard stats, and health checks.
+A full-stack YouTube-style learning project with a Node.js/Express backend API and a React/Vite frontend. It includes user authentication, profile management, media uploads, channel lookup, watch history, videos, comments, likes, playlists, subscriptions, dashboard stats, and health checks.
 
 ## Tech Stack
 
@@ -11,10 +11,20 @@ A Node.js and Express backend API for a YouTube-style application. It includes u
 - Cloudinary for media uploads
 - Multer for file handling
 - Cookie-based auth support
+- React
+- Vite
+- Fetch API
 
 ## Project Structure
 
 ```text
+frontend/`
+  src/
+    api.js         Frontend API helper for backend requests
+    main.jsx      React app entry point and screens
+    styles.css    Frontend styles
+  index.html      Vite HTML entry point
+  package.json    Frontend scripts and dependencies
 src/
   controllers/     Request handlers for each resource
   db/              MongoDB connection setup
@@ -39,8 +49,23 @@ public/
 
 ### Installation
 
+Install backend dependencies from the project root:
+
 ```bash
 npm install
+```
+
+Install frontend dependencies:
+
+```bash
+cd frontend
+npm install
+```
+
+On Windows PowerShell, if `npm` is blocked by script execution policy, use:
+
+```bash
+npm.cmd install
 ```
 
 ### Environment Variables
@@ -49,7 +74,7 @@ Create a `.env` file in the project root:
 
 ```env
 PORT=8000
-CORS_ORIGIN=http://localhost:3000
+CORS_ORIGIN=http://localhost:5173
 MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net
 
 ACCESS_TOKEN_SECRET=your_access_token_secret
@@ -64,10 +89,16 @@ CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 
 The database name is configured as `youtube` in `src/constants.js`.
 
-### Run the Development Server
+### Run the Backend
 
 ```bash
 npm run dev
+```
+
+On Windows PowerShell, you can also use:
+
+```bash
+npm.cmd run dev
 ```
 
 By default, the API runs on:
@@ -75,6 +106,78 @@ By default, the API runs on:
 ```text
 http://localhost:8000
 ```
+
+### Run the Frontend
+
+Open a second terminal:
+
+```bash
+cd frontend
+npm run dev
+```
+
+On Windows PowerShell:
+
+```bash
+cd frontend
+npm.cmd run dev
+```
+
+By default, the frontend runs on:
+
+```text
+http://localhost:5173
+```
+
+### Connect Frontend and Backend
+
+The frontend calls the backend through `frontend/src/api.js`:
+
+```text
+http://localhost:8000/api/v1
+```
+
+The backend allows requests from the frontend through the root `.env` value:
+
+```env
+CORS_ORIGIN=http://localhost:5173
+```
+
+If you change `CORS_ORIGIN`, restart the backend server.
+
+The frontend sends authenticated requests using both:
+
+- `credentials: "include"` for HTTP-only cookies
+- `Authorization: Bearer <access_token>` from local storage
+
+### Build the Frontend
+
+```bash
+cd frontend
+npm run build
+```
+
+On Windows PowerShell:
+
+```bash
+cd frontend
+npm.cmd run build
+```
+
+The production build is generated in `frontend/dist/`.
+
+## Frontend Features
+
+- Register user with avatar and optional cover image
+- Login and logout
+- Load current user
+- Update account name and email
+- Upload avatar and cover image
+- Search channel by username
+- Load watch history
+- Show API health status
+
+Some frontend areas are placeholders until the matching backend controller TODOs are completed, especially video feed, tweets, playlists, subscriptions, and dashboard data.
 
 ## API Routes
 
@@ -193,10 +296,14 @@ Uploads are handled with Multer and then sent to Cloudinary.
 
 | Command | Description |
 | --- | --- |
-| `npm run dev` | Start the development server with Nodemon |
+| `npm run dev` | Start the backend development server with Nodemon |
+| `cd frontend && npm run dev` | Start the frontend development server |
+| `cd frontend && npm run build` | Build the frontend for production |
 
 ## Notes
 
 - Temporary upload files are stored in `public/temp`.
+- `public/temp` upload files are ignored by Git, except `.gitkeep`.
+- Frontend build output in `frontend/dist` is ignored by Git.
 - API responses and errors are standardized through utility classes in `src/utils`.
 - The app uses CORS with credentials enabled, so set `CORS_ORIGIN` to your frontend URL.
