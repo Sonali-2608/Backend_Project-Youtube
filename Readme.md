@@ -176,8 +176,7 @@ The production build is generated in `frontend/dist/`.
 - Search channel by username
 - Load watch history
 - Show API health status
-
-Some frontend areas are placeholders until the matching backend controller TODOs are completed, especially video feed, tweets, playlists, subscriptions, and dashboard data.
+- Browse videos, tweets, playlists, subscriptions, and dashboard data through the completed backend controllers.
 
 ## API Routes
 
@@ -263,9 +262,9 @@ Base URL:
 
 | Method | Endpoint | Description |
 | --- | --- | --- |
-| GET | `/subscriptions/c/:channelId` | Get subscribed channels |
+| GET | `/subscriptions/c/:channelId` | Get channel subscribers |
 | POST | `/subscriptions/c/:channelId` | Toggle channel subscription |
-| GET | `/subscriptions/u/:subscriberId` | Get channel subscribers |
+| GET | `/subscriptions/u/:subscriberId` | Get subscribed channels |
 
 ### Dashboard
 

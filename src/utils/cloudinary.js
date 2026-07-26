@@ -30,6 +30,28 @@ const uploadOnCloudinary = async (localFilePath) => {
     }
 }
 
+const deleteFromCloudinary = async (fileUrl, resourceType = "image") => {
+    try {
+        if (!fileUrl) return null
 
+        const url = new URL(fileUrl)
+        const uploadIndex = url.pathname.indexOf("/upload/")
 
-export {uploadOnCloudinary}
+        if (uploadIndex === -1) return null
+
+        const publicIdWithVersion = url.pathname
+            .slice(uploadIndex + "/upload/".length)
+            .replace(/^v\d+\//, "")
+            .replace(/\.[^/.]+$/, "")
+
+        if (!publicIdWithVersion) return null
+
+        return await cloudinary.uploader.destroy(publicIdWithVersion, {
+            resource_type: resourceType
+        })
+    } catch (error) {
+        return null
+    }
+}
+
+export {uploadOnCloudinary, deleteFromCloudinary}
